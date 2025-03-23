@@ -1,0 +1,63 @@
+@font-face {
+  font-family: myfirstFont;
+  src: url("../fonts/Poppins-Light.ttf");
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: myfirstFont;
+}
+
+.tab1 {
+  width: 20%;
+  display: flex;
+  flex-direction: row;
+
+  .tab-button {
+    flex: 1; /* Make each tab button take equal space */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+
+    .tabdes1 {
+      width: 100%;
+      text-align: center;
+      padding: 5px;
+      background-color: rgb(219, 219, 219);
+      box-shadow: 2px 2px 4px rgba(100, 100, 100, 0.2);
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    .radiobtn1 {
+      display: none;
+
+      &:checked + .tabdes1 {
+        background-color: purple;
+        color: white;
+        box-shadow: 2px 2px 4px rgba(100, 100, 100, 0.2);
+      }
+    }
+  }
+}
+
+.fullwidth {
+  width: 100%;
+}
+
+.flexdirec-row {
+  display: flex;
+  flex-direction: row;
+}
+
+.flexbox {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}

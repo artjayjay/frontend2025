@@ -1,0 +1,21 @@
+// /widgets/buttons
+{
+  "liveSassCompile.settings.formats": [
+    {
+      "format": "compressed",
+      "extensionName": ".css",
+      "savePath": "/widgets/modal/public/css",
+      "savePathReplacementPairs": {
+        "scss": "css"
+      }
+    }
+  ],
+  "liveSassCompile.settings.includeItems": ["/widgets/modal/scss/style.scss"],
+  "liveServer.settings.port": 5503
+}
+
+// {
+//   "editor.formatOnSave": false,
+//   "liveServer.settings.port": 5504
+// }
+// be careful of this to avoid modification of html files

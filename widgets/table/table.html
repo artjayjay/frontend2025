@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Responsive Table with Pagination</title>
+    <link rel="stylesheet" href="public/css/style.css" />
+  </head>
+  <body>
+    <div class="pagecontainer fullwidth fullheight">
+      <div class="flexbox flexdirec-col">
+        <!-- Table 1 -->
+
+        <div class="table-container">
+          <table id="data-table1">
+            <thead>
+              <tr>
+                <th>Song No.</th>
+                <th>Song Name</th>
+                <th>Artist</th>
+                <th>Album</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <!-- Rows will be populated here by JavaScript -->
+            </tbody>
+          </table>
+        </div>
+
+        <div id="paginationbtns1" class="pagination">
+          <button class="prev-page">Previous</button>
+          <span class="page-info">Page 1 of 3</span>
+          <button class="next-page">Next</button>
+        </div>
+      </div>
+
+      <div class="flexbox flexdirec-col">
+        <!-- Table 2 -->
+        <div class="table-container">
+          <table id="data-table2">
+            <thead>
+              <tr>
+                <th>Song No.</th>
+                <th>Song Name</th>
+                <th>Artist</th>
+                <th>Album</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Rows will be populated here by JavaScript -->
+            </tbody>
+          </table>
+        </div>
+
+        <div id="paginationbtns2" class="pagination">
+          <button class="prev-page">Previous</button>
+          <span class="page-info">Page 1 of 3</span>
+          <button class="next-page">Next</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- SimpleBar JS -->
+    <script>
+      // Sample JSON data for songs
+      const data = {
+        table1: [
+          {
+            songNo: 1,
+            songName: "Bohemian Rhapsody",
+            artist: "Queen",
+            album: "A Night at the Opera",
+          },
+          {
+            songNo: 2,
+            songName: "Hotel California",
+            artist: "Eagles",
+            album: "Hotel California",
+          },
+          {
+            songNo: 3,
+            songName: "Stairway to Heaven",
+            artist: "Led Zeppelin",
+            album: "Led Zeppelin IV",
+          },
+          {
+            songNo: 4,
+            songName: "Smells Like Teen Spirit",
+            artist: "Nirvana",
+            album: "Nevermind",
+          },
+          {
+            songNo: 5,
+            songName: "Imagine",
+            artist: "John Lennon",
+            album: "Imagine",
+          },
+          {
+            songNo: 6,
+            songName: "Hey Jude",
+            artist: "The Beatles",
+            album: "The Beatles (White Album)",
+          },
+          {
+            songNo: 7,
+            songName: "Thriller",
+            artist: "Michael Jackson",
+            album: "Thriller",
+          },
+          {
+            songNo: 8,
+            songName: "Like a Rolling Stone",
+            artist: "Bob Dylan",
+            album: "Highway 61 Revisited",
+          },
+          {
+            songNo: 9,
+            songName: "Purple Haze",
+            artist: "Jimi Hendrix",
+            album: "Are You Experienced",
+          },
+          {
+            songNo: 10,
+            songName: "Sweet Child o' Mine",
+            artist: "Guns N' Roses",
+            album: "Appetite for Destruction",
+          },
+          {
+            songNo: 11,
+            songName: "Billie Jean",
+            artist: "Michael Jackson",
+            album: "Thriller",
+          },
+          {
+            songNo: 12,
+            songName: "Let It Be",
+            artist: "The Beatles",
+            album: "Let It Be",
+          },
+        ],
+        table2: [
+          { id: "4", name: "John Doe", content: "Some content 4" },
+          { id: "5", name: "Jane Smith", content: "Some content 5" },
+          { id: "6", name: "Alice Johnson", content: "Some content 6" },
+        ],
+      };
+
+      // Pagination variables
+      const rowsPerPage = 8;
+      let currentPage1 = 1;
+      let currentPage2 = 1;
+
+      // Function to create table row HTML
+      function createtableRowHTML(row, tableschema) {
+        let tableschemadata = {
+          table1: `
+            <td data-label="Song No.">${row.songNo}</td>
+            <td data-label="Song Name">${row.songName}</td>
+            <td data-label="Artist">${row.artist}</td>
+            <td data-label="Album">${row.album}</td>
+          `,
+          table2: `
+            <td data-label="ID">${row.id}</td>
+            <td data-label="NAME">${row.name}</td>
+            <td data-label="CONTENT">${row.content}</td>
+          `,
+        };
+        return tableschemadata[tableschema];
+      }
+
+      // Function to render table rows
+      function renderTable(
+        page,
+        tableschema,
+        tablebdy,
+        prevpgbtn,
+        nextpgbtn,
+        pageinfo
+      ) {
+        let tableBody = document.querySelector(tablebdy);
+        let prevPageButton = document.querySelector(prevpgbtn);
+        let nextPageButton = document.querySelector(nextpgbtn);
+        let pageInfo = document.querySelector(pageinfo);
+
+        tableBody.innerHTML = ""; // Clear existing rows
+        const start = (page - 1) * rowsPerPage;
+        const end = start + rowsPerPage;
+        const paginatedData = data[tableschema].slice(start, end);
+
+        paginatedData.forEach((row) => {
+          const tr = document.createElement("tr");
+          tr.innerHTML = createtableRowHTML(row, tableschema);
+          tableBody.appendChild(tr);
+        });
+
+        // Update pagination info
+        pageInfo.textContent = `Page ${page} of ${Math.ceil(
+          data[tableschema].length / rowsPerPage
+        )}`;
+
+        // Enable/disable pagination buttons
+        prevPageButton.disabled = page === 1;
+        nextPageButton.disabled =
+          page === Math.ceil(data[tableschema].length / rowsPerPage);
+      }
+
+      // Function to handle pagination button clicks
+      function paginationbtnfunc(
+        page,
+        tableschema,
+        tablebdy,
+        prevpgbtn,
+        nextpgbtn,
+        pageinfo
+      ) {
+        document.querySelector(prevpgbtn).addEventListener("click", () => {
+          if (page > 1) {
+            page--;
+            renderTable(
+              page,
+              tableschema,
+              tablebdy,
+              prevpgbtn,
+              nextpgbtn,
+              pageinfo
+            );
+          }
+        });
+
+        document.querySelector(nextpgbtn).addEventListener("click", () => {
+          if (page < Math.ceil(data[tableschema].length / rowsPerPage)) {
+            page++;
+            renderTable(
+              page,
+              tableschema,
+              tablebdy,
+              prevpgbtn,
+              nextpgbtn,
+              pageinfo
+            );
+          }
+        });
+      }
+
+      // Initial render for table 1
+      renderTable(
+        currentPage1,
+        "table1",
+        "#data-table1 tbody",
+        "#paginationbtns1 .prev-page",
+        "#paginationbtns1 .next-page",
+        "#paginationbtns1 .page-info"
+      );
+      paginationbtnfunc(
+        currentPage1,
+        "table1",
+        "#data-table1 tbody",
+        "#paginationbtns1 .prev-page",
+        "#paginationbtns1 .next-page",
+        "#paginationbtns1 .page-info"
+      );
+
+      // Initial render for table 2
+      renderTable(
+        currentPage2,
+        "table1",
+        "#data-table2 tbody",
+        "#paginationbtns2 .prev-page",
+        "#paginationbtns2 .next-page",
+        "#paginationbtns2 .page-info"
+      );
+      paginationbtnfunc(
+        currentPage2,
+        "table1",
+        "#data-table2 tbody",
+        "#paginationbtns2 .prev-page",
+        "#paginationbtns2 .next-page",
+        "#paginationbtns2 .page-info"
+      );
+    </script>
+  </body>
+</html>

@@ -1,0 +1,40 @@
+@font-face {
+  font-family: myfirstFont;
+  src: url("../fonts/Poppins-Light.ttf");
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: myfirstFont;
+}
+
+@property --var1 {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: transparent;
+}
+
+.fullwidth {
+  width: 100%;
+}
+
+.fullheight {
+  height: 100%;
+}
+
+// Flexbox utility class
+.flexbox {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.flexdirec-col {
+  flex-direction: column;
+}
+
+.flexdirec-row {
+  flex-direction: row;
+}

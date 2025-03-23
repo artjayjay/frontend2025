@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Reusable Nested Modals</title>
+    <link rel="stylesheet" href="public/css/style.css" />
+  </head>
+  <body>
+    <h4>Traditional Modal Example</h4>
+    <button class="open-modal" data-modal="myModal1">Open Modal 1</button>
+    <br />
+    <br />
+    <div id="myModal1" class="modal1">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <p>Modal 1 Content</p>
+        <button class="open-modal" data-modal="myModal2">
+          Open 1st inner Modal 1
+        </button>
+      </div>
+    </div>
+
+    <div id="myModal2" class="modal1">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <p>Modal 2 Content</p>
+        <button class="open-modal" data-modal="myModal3">
+          Open 2nd inner Modal 1
+        </button>
+      </div>
+    </div>
+
+    <div id="myModal3" class="modal1">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <p>3rd Inner Modal 1</p>
+      </div>
+    </div>
+
+    <button class="open-modal" data-modal="myModal2_1">Open Modal 2</button>
+    <br />
+    <br />
+    <div id="myModal2_1" class="modal1">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <p>Modal 2_1 Content</p>
+        <button class="open-modal" data-modal="myModal2_2">
+          Open 1st inner Modal 1
+        </button>
+      </div>
+    </div>
+
+    <div id="myModal2_2" class="modal1">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <p>Modal 2_2 Content</p>
+        <button class="open-modal" data-modal="myModal2_3">
+          Open 2nd inner Modal 1
+        </button>
+      </div>
+    </div>
+
+    <div id="myModal2_3" class="modal1">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <p>3rd Inner Modal 2</p>
+      </div>
+    </div>
+
+    <h4>Modern Modal Example</h4>
+    <button class="open-modal" data-modal="myModal3_1">Open Modal 3</button>
+
+    <dialog id="myModal3_1" class="modal2">
+      <div>Modal 1 Content</div>
+      <span class="close">&times;</span>
+    </dialog>
+
+    <script src="public/js/script.js"></script>
+  </body>
+</html>
